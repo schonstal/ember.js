@@ -23,6 +23,7 @@ import {
   _instrumentStart
 } from 'ember-metal';
 import {
+  dispatchLifeCycleHook,
   setViewElement
 } from 'ember-views';
 import {
@@ -333,8 +334,8 @@ class CurlyComponentManager {
       component.setProperties(props);
       component[IS_DISPATCHING_ATTRS] = false;
 
-      component.trigger('didUpdateAttrs', { oldAttrs, newAttrs });
-      component.trigger('didReceiveAttrs', { oldAttrs, newAttrs });
+      dispatchLifeCycleHook(component, 'didUpdateAttrs', oldAttrs, newAttrs);
+      dispatchLifeCycleHook(component, 'didReceiveAttrs', oldAttrs, newAttrs);
     }
 
     if (environment.isInteractive) {
